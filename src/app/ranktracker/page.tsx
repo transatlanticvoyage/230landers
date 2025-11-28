@@ -680,7 +680,7 @@ export default function RanktrackerPage() {
                         key={planOption.plan}
                         className={`border-2 rounded-xl p-5 cursor-pointer transition-all hover:border-blue-500 hover:transform hover:-translate-y-1 ${
                           selectedPlan === planOption.plan ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-                        }`}>
+                        }`}
                         onClick={() => setSelectedPlan(planOption.plan)}
                       >
                         <input 
