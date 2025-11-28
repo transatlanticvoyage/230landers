@@ -1,3 +1,10 @@
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: '230landers - Landing Pages Collection',
+  description: 'Next.js landing pages for Maps Booster Deluxe, Tregnar SaaS platform, and MoonTracker SEO software. Built with React, TypeScript, and Tailwind CSS.'
+}
+
 'use client'
 
 import { useState } from 'react'

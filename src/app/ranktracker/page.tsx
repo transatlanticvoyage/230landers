@@ -1,3 +1,10 @@
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'MoonTracker - Advanced SEO Rank Tracking Software',
+  description: 'The most accurate SEO rank tracking software for agencies and professionals. Real-time tracking, competitor analysis, and white-label reporting.'
+}
+
 'use client'
 
 import { useState, useEffect } from 'react'
