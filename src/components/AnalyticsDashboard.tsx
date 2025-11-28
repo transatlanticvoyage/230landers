@@ -1,5 +1,8 @@
 'use client'
 
+// Test comment: Analytics dashboard component for Viper admin system
+// Displays user session data, conversion funnels, and detailed analytics
+// Location: moved to sheldon-containers for better organization
 import { useState, useEffect } from 'react'
 
 interface Session {

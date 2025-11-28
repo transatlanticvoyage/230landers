@@ -1,5 +1,7 @@
 <!-- Updated for git staging trigger -->
 <!-- Test comment for VS Code Source Control visibility -->
+<!-- REPO MOVED: Now located in sheldon-containers/230landers for better organization -->
+<!-- Git functionality test - new location should work properly -->
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

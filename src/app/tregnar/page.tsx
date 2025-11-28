@@ -58,11 +58,17 @@ export default function TregnarPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white sticky top-0 z-50 shadow-lg">
+      <header className="bg-gradient-to-r from-blue-800 to-blue-600 text-white sticky top-0 z-50 shadow-lg">
         <nav className="max-w-6xl mx-auto px-5 py-4">
           <div className="flex justify-between items-center">
-            <div className="text-3xl font-extrabold bg-gradient-to-br from-yellow-400 to-yellow-500 bg-clip-text text-transparent">
-              Tregnar
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🌐</span>
+              <div className="text-2xl font-bold">
+                Tregnar{' '}
+                <span className="bg-blue-400 text-gray-800 px-3 py-1 rounded-md text-xl ml-2">
+                  by Lead Train
+                </span>
+              </div>
             </div>
             <ul className="hidden md:flex gap-8 items-center">
               <li><button onClick={() => scrollToSection('features')} className="hover:opacity-80 transition-opacity">Features</button></li>
@@ -77,7 +83,7 @@ export default function TregnarPage() {
               </a>
               <button 
                 onClick={() => handleTregnarSignup('professional')}
-                className="px-6 py-3 bg-gradient-to-br from-yellow-400 to-yellow-500 border-none rounded-lg text-gray-800 font-bold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-yellow-400/40 uppercase tracking-wider text-sm"
+                className="px-6 py-3 bg-blue-400 border-none rounded-lg text-gray-800 font-bold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-blue-400/40 uppercase tracking-wider text-sm"
               >
                 Start Free Trial
               </button>
@@ -116,11 +122,11 @@ export default function TregnarPage() {
             <div className="flex justify-center gap-5 mt-10 flex-wrap">
               <button 
                 onClick={() => handleTregnarSignup('professional')}
-                className="px-9 py-5 bg-gradient-to-br from-indigo-600 to-purple-600 text-white border-none rounded-xl text-lg font-bold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-indigo-600/30"
+                className="px-9 py-5 bg-gradient-to-br from-blue-800 to-blue-600 text-white border-none rounded-xl text-lg font-bold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-blue-600/30"
               >
                 Start Free Trial
               </button>
-              <a href="#" className="px-9 py-5 bg-white text-indigo-600 border-2 border-slate-200 rounded-xl text-lg font-bold hover:border-indigo-600 hover:transform hover:-translate-y-1 transition-all">
+              <a href="#" className="px-9 py-5 bg-white text-blue-600 border-2 border-slate-200 rounded-xl text-lg font-bold hover:border-blue-600 hover:transform hover:-translate-y-1 transition-all">
                 Watch Demo
               </a>
             </div>
@@ -169,7 +175,7 @@ export default function TregnarPage() {
                 }
               ].map((feature) => (
                 <div key={feature.title} className="bg-white p-10 rounded-3xl shadow-lg text-left border border-slate-100 hover:transform hover:-translate-y-2 transition-all hover:shadow-xl">
-                  <div className="w-15 h-15 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-5 text-white">
+                  <div className="w-15 h-15 bg-gradient-to-br from-blue-800 to-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-5 text-white">
                     {feature.icon}
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 mb-4">{feature.title}</h3>
@@ -227,7 +233,7 @@ export default function TregnarPage() {
                   features: ['Link Analysis', 'Footprint Masking', 'Network Health']
                 }
               ].map((model) => (
-                <div key={model.title} className="bg-white p-8 rounded-2xl shadow-md text-center border-2 border-slate-100 hover:border-indigo-600 hover:transform hover:-translate-y-1 transition-all">
+                <div key={model.title} className="bg-white p-8 rounded-2xl shadow-md text-center border-2 border-slate-100 hover:border-blue-600 hover:transform hover:-translate-y-1 transition-all">
                   <div className="text-5xl mb-5">{model.icon}</div>
                   <h3 className="text-xl font-bold text-slate-800 mb-4">{model.title}</h3>
                   <p className="text-slate-600 mb-5 text-sm">{model.description}</p>
@@ -245,14 +251,14 @@ export default function TregnarPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white py-20 text-center">
+        <section className="bg-gradient-to-br from-blue-800 to-blue-600 text-white py-20 text-center">
           <div className="max-w-6xl mx-auto px-5">
             <h2 className="text-4xl font-bold mb-5">Ready to scale your web business?</h2>
             <p className="text-xl mb-10 opacity-90">Join thousands of marketers who are already using Tregnar to manage their website portfolios more efficiently.</p>
             <div className="flex justify-center gap-5">
               <button 
                 onClick={() => handleTregnarSignup('professional')}
-                className="px-9 py-5 bg-gradient-to-br from-yellow-400 to-yellow-500 text-gray-800 border-none rounded-xl text-lg font-bold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-yellow-400/40"
+                className="px-9 py-5 bg-blue-400 text-gray-800 border-none rounded-xl text-lg font-bold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-blue-400/40"
               >
                 Start Free Trial
               </button>
@@ -269,7 +275,7 @@ export default function TregnarPage() {
         <div className="max-w-6xl mx-auto px-5">
           <div className="grid md:grid-cols-5 gap-10 mb-10">
             <div className="md:col-span-2 max-w-sm">
-              <div className="text-2xl font-extrabold bg-gradient-to-br from-yellow-400 to-yellow-500 bg-clip-text text-transparent mb-4">
+              <div className="text-2xl font-bold text-white mb-4">
                 Tregnar
               </div>
               <p className="text-slate-400 leading-relaxed">
@@ -280,30 +286,30 @@ export default function TregnarPage() {
             <div>
               <h4 className="font-bold mb-5 text-white">Product</h4>
               <ul className="list-none space-y-2">
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Features</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Pricing</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Integrations</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">API</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Features</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Pricing</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Integrations</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">API</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-bold mb-5 text-white">Use Cases</h4>
               <ul className="list-none space-y-2">
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Lead Generation</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Rank and Rent</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Affiliate Marketing</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Client SEO</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Lead Generation</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Rank and Rent</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Affiliate Marketing</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Client SEO</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-bold mb-5 text-white">Company</h4>
               <ul className="list-none space-y-2">
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">About</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Careers</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Contact</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-yellow-400 transition-colors">Privacy</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">About</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Careers</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Contact</a></li>
+                <li><a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Privacy</a></li>
               </ul>
             </div>
           </div>
@@ -311,9 +317,9 @@ export default function TregnarPage() {
           <div className="border-t border-slate-600 pt-8 flex flex-col md:flex-row justify-between items-center gap-5 text-slate-400">
             <div>© 2025 Tregnar. All rights reserved.</div>
             <div className="flex gap-8">
-              <a href="#" className="hover:text-yellow-400 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-yellow-400 transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-yellow-400 transition-colors">Cookie Policy</a>
+              <a href="#" className="hover:text-blue-400 transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-blue-400 transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-blue-400 transition-colors">Cookie Policy</a>
             </div>
           </div>
         </div>
@@ -331,7 +337,7 @@ export default function TregnarPage() {
               </p>
               <button 
                 onClick={() => setIsCheckoutOpen(false)}
-                className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Close
               </button>

@@ -1,5 +1,7 @@
 'use client'
 
+// Test comment: MoonTracker ranktracker page - main landing page for SEO tool
+// Updated location: now in sheldon-containers/230landers
 import { useState, useEffect } from 'react'
 import ViperDevPanel from '../../components/ViperDevPanel'
 import StepDevButtons from '../../components/StepDevButtons'
@@ -426,19 +428,25 @@ export default function RanktrackerPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-600 to-purple-700">
+    <div className="min-h-screen bg-gradient-to-br from-blue-800 via-blue-600 to-blue-700">
       {/* Header */}
-      <header className="bg-white/98 shadow-lg sticky top-0 z-40">
-        <nav className="max-w-6xl mx-auto px-5 py-5">
+      <header className="bg-gradient-to-r from-blue-800 to-blue-600 text-white sticky top-0 z-50 shadow-lg">
+        <nav className="max-w-6xl mx-auto px-5 py-4">
           <div className="flex justify-between items-center">
-            <div className="text-2xl font-extrabold bg-gradient-to-br from-indigo-500 to-purple-600 bg-clip-text text-transparent">
-              🌙 MoonTracker
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🌙</span>
+              <div className="text-2xl font-bold">
+                MoonTracker{' '}
+                <span className="bg-blue-400 text-gray-800 px-3 py-1 rounded-md text-xl ml-2">
+                  by Lead Train
+                </span>
+              </div>
             </div>
             <ul className="hidden md:flex gap-8">
-              <li><button onClick={() => scrollToSection('features')} className="text-gray-600 hover:text-indigo-500 font-medium transition-colors">Features</button></li>
-              <li><button onClick={() => scrollToSection('pricing')} className="text-gray-600 hover:text-indigo-500 font-medium transition-colors">Pricing</button></li>
-              <li><button onClick={() => scrollToSection('testimonials')} className="text-gray-600 hover:text-indigo-500 font-medium transition-colors">Testimonials</button></li>
-              <li><a href="#contact" className="text-gray-600 hover:text-indigo-500 font-medium transition-colors">Contact</a></li>
+              <li><button onClick={() => scrollToSection('features')} className="text-white hover:opacity-80 font-medium transition-colors">Features</button></li>
+              <li><button onClick={() => scrollToSection('pricing')} className="text-white hover:opacity-80 font-medium transition-colors">Pricing</button></li>
+              <li><button onClick={() => scrollToSection('testimonials')} className="text-white hover:opacity-80 font-medium transition-colors">Testimonials</button></li>
+              <li><a href="#contact" className="text-white hover:opacity-80 font-medium transition-colors">Contact</a></li>
             </ul>
           </div>
         </nav>
@@ -456,7 +464,7 @@ export default function RanktrackerPage() {
             </p>
             <button 
               onClick={() => openCheckout('professional')}
-              className="inline-block px-10 py-5 bg-white text-indigo-500 rounded-full text-lg font-semibold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-xl cursor-pointer"
+              className="inline-block px-10 py-5 bg-blue-400 text-gray-800 rounded-full text-lg font-semibold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-xl cursor-pointer"
             >
               Start Free 14-Day Trial
             </button>
@@ -536,14 +544,14 @@ export default function RanktrackerPage() {
                   features: ['✓ 5,000 Keywords', '✓ Unlimited Websites', '✓ Real-time Updates', '✓ Unlimited Competitors', '✓ Dedicated Account Manager', '✓ Custom Integrations', '✓ Advanced API Access']
                 }
               ].map((planData) => (
-                <div key={planData.plan} className={`bg-white rounded-3xl p-10 text-center relative transition-all hover:transform hover:-translate-y-2 hover:shadow-xl ${planData.popular ? 'transform scale-105 shadow-2xl border-4 border-indigo-500' : 'shadow-lg'}`}>
+                <div key={planData.plan} className={`bg-white rounded-3xl p-10 text-center relative transition-all hover:transform hover:-translate-y-2 hover:shadow-xl ${planData.popular ? 'transform scale-105 shadow-2xl border-4 border-blue-500' : 'shadow-lg'}`}>
                   {planData.popular && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-semibold">
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold">
                       MOST POPULAR
                     </div>
                   )}
                   <h3 className="text-2xl font-bold mb-3 text-gray-800">{planData.name}</h3>
-                  <div className="text-5xl font-extrabold text-indigo-500 mb-2">${planData.price}</div>
+                  <div className="text-5xl font-extrabold text-blue-500 mb-2">${planData.price}</div>
                   <div className="text-gray-500 text-lg mb-8">per month</div>
                   <ul className="list-none mb-10 space-y-3">
                     {planData.features.map((feature, idx) => (
@@ -552,7 +560,7 @@ export default function RanktrackerPage() {
                   </ul>
                   <button 
                     onClick={() => openCheckout(planData.plan)}
-                    className="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full text-lg font-semibold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-indigo-500/30"
+                    className="w-full py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full text-lg font-semibold hover:transform hover:-translate-y-1 transition-all shadow-lg hover:shadow-blue-500/30"
                   >
                     Start Free Trial
                   </button>
@@ -585,7 +593,7 @@ export default function RanktrackerPage() {
                 }
               ].map((testimonial, idx) => (
                 <div key={idx} className="p-8 bg-gray-50 rounded-2xl relative">
-                  <div className="text-6xl text-indigo-500/30 absolute top-3 left-5">"</div>
+                  <div className="text-6xl text-blue-500/30 absolute top-3 left-5">"</div>
                   <p className="text-gray-600 italic mb-5 relative z-10">{testimonial.quote}</p>
                   <div className="font-semibold text-gray-800">{testimonial.author}</div>
                   <div className="text-gray-500 text-sm">{testimonial.role}</div>
@@ -614,7 +622,7 @@ export default function RanktrackerPage() {
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative">
             {/* Header */}
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-8 rounded-t-3xl relative">
+            <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-t-3xl relative">
               <button 
                 onClick={closeCheckout}
                 className="absolute top-5 right-5 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-2xl transition-colors"
@@ -630,13 +638,13 @@ export default function RanktrackerPage() {
               {[1, 2, 3, 4].map((step) => (
                 <div key={step} className="flex-1 text-center relative">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 mx-auto relative z-10 ${
-                    currentStep === step ? 'bg-indigo-500 text-white' : 
+                    currentStep === step ? 'bg-blue-500 text-white' : 
                     currentStep > step ? 'bg-green-500 text-white' : 
                     'bg-gray-200 text-gray-400'
                   }`}>
                     {step}
                   </div>
-                  <div className={`text-sm ${currentStep === step ? 'text-indigo-500 font-semibold' : 'text-gray-500'}`}>
+                  <div className={`text-sm ${currentStep === step ? 'text-blue-500 font-semibold' : 'text-gray-500'}`}>
                     {step === 1 && 'Plan Selection'}
                     {step === 2 && 'Account Info'}
                     {step === 3 && 'Payment'}
@@ -670,9 +678,9 @@ export default function RanktrackerPage() {
                     ].map((planOption) => (
                       <div 
                         key={planOption.plan}
-                        className={`border-2 rounded-xl p-5 cursor-pointer transition-all hover:border-indigo-500 hover:transform hover:-translate-y-1 ${
-                          selectedPlan === planOption.plan ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200'
-                        }`}
+                        className={`border-2 rounded-xl p-5 cursor-pointer transition-all hover:border-blue-500 hover:transform hover:-translate-y-1 ${
+                          selectedPlan === planOption.plan ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
+                        }`}>
                         onClick={() => setSelectedPlan(planOption.plan)}
                       >
                         <input 
@@ -682,7 +690,7 @@ export default function RanktrackerPage() {
                           className="sr-only"
                         />
                         <div className="text-lg font-semibold mb-2">{planOption.name}</div>
-                        <div className="text-3xl font-bold text-indigo-500 mb-3">
+                        <div className="text-3xl font-bold text-blue-500 mb-3">
                           ${planOption.price}<span className="text-base font-normal">/mo</span>
                         </div>
                         <ul className="text-sm space-y-1">
@@ -698,11 +706,11 @@ export default function RanktrackerPage() {
                       type="text" 
                       id="promoCode"
                       placeholder="Promo Code (Optional)" 
-                      className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                      className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                     />
                     <button 
                       onClick={applyPromoCode}
-                      className="px-6 py-3 bg-indigo-500 text-white rounded-lg font-semibold hover:bg-indigo-600"
+                      className="px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600"
                     >
                       Apply
                     </button>
@@ -731,7 +739,7 @@ export default function RanktrackerPage() {
                         type="text" 
                         id="firstName"
                         required 
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                       />
                     </div>
                     <div>
@@ -740,7 +748,7 @@ export default function RanktrackerPage() {
                         type="text" 
                         id="lastName"
                         required 
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                       />
                     </div>
                   </div>
@@ -769,7 +777,7 @@ export default function RanktrackerPage() {
                         id="password"
                         required 
                         onChange={(e) => checkPasswordStrength(e.target.value)}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                       />
                       <div className="h-1 bg-gray-200 rounded mt-2">
                         <div className={`h-full rounded transition-all ${
@@ -785,7 +793,7 @@ export default function RanktrackerPage() {
                         type="password" 
                         id="confirmPassword"
                         required 
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                       />
                     </div>
                   </div>
@@ -852,7 +860,7 @@ export default function RanktrackerPage() {
                           onChange={(e) => {
                             e.target.value = formatExpiry(e.target.value)
                           }}
-                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                         />
                       </div>
                       <div>
@@ -866,7 +874,7 @@ export default function RanktrackerPage() {
                           onChange={(e) => {
                             e.target.value = e.target.value.replace(/\D/g, '')
                           }}
-                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                         />
                       </div>
                     </div>
@@ -876,7 +884,7 @@ export default function RanktrackerPage() {
                         type="text" 
                         id="cardName"
                         required 
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                       />
                     </div>
                   </div>
@@ -897,7 +905,7 @@ export default function RanktrackerPage() {
                         type="text" 
                         id="billingCity"
                         required 
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                       />
                     </div>
                     <div>
@@ -906,7 +914,7 @@ export default function RanktrackerPage() {
                         type="text" 
                         id="billingState"
                         required 
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                       />
                     </div>
                   </div>
@@ -917,7 +925,7 @@ export default function RanktrackerPage() {
                         type="text" 
                         id="billingZip"
                         required 
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                       />
                     </div>
                     <div>
@@ -925,7 +933,7 @@ export default function RanktrackerPage() {
                       <select 
                         id="billingCountry"
                         required 
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
                       >
                         <option value="">Select Country</option>
                         <option value="US">United States</option>
@@ -943,7 +951,7 @@ export default function RanktrackerPage() {
                         required 
                         className="w-4 h-4"
                       />
-                      <span className="text-sm">I agree to the <a href="#" className="text-indigo-500">Terms of Service</a> and <a href="#" className="text-indigo-500">Privacy Policy</a></span>
+                      <span className="text-sm">I agree to the <a href="#" className="text-blue-500">Terms of Service</a> and <a href="#" className="text-blue-500">Privacy Policy</a></span>
                     </label>
                   </div>
                 </form>
@@ -996,7 +1004,7 @@ export default function RanktrackerPage() {
                   
                   {isProcessing && (
                     <div className="text-center py-10">
-                      <div className="inline-block w-12 h-12 border-4 border-gray-200 border-t-indigo-500 rounded-full animate-spin"></div>
+                      <div className="inline-block w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
                       <p className="mt-4 text-gray-600">Processing your order...</p>
                     </div>
                   )}
@@ -1009,7 +1017,7 @@ export default function RanktrackerPage() {
                       <h2 className="text-2xl font-bold mb-3">Welcome to MoonTracker!</h2>
                       <p className="text-gray-600 mb-2">Your account has been created successfully.</p>
                       <p className="text-gray-500 mb-6">Check your email for login instructions and getting started guide.</p>
-                      <button className="px-8 py-3 bg-indigo-500 text-white rounded-lg font-semibold hover:bg-indigo-600">
+                      <button className="px-8 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600">
                         Go to Dashboard
                       </button>
                     </div>
@@ -1051,7 +1059,7 @@ export default function RanktrackerPage() {
                 <div className="flex-1"></div>
                 <button 
                   onClick={handleNextStep}
-                  className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg font-semibold hover:transform hover:-translate-y-1 transition-all shadow-lg"
+                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-semibold hover:transform hover:-translate-y-1 transition-all shadow-lg"
                 >
                   {currentStep === 4 ? 'Complete Order' : 'Continue'}
                 </button>
