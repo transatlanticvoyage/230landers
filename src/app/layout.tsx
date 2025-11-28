@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | 230landers',
-    default: '230landers - Landing Pages Collection'
+    template: '%s',
+    default: 'Landing Pages Collection'
   },
   description: "Next.js landing pages for Maps Booster Deluxe, Tregnar SaaS platform, and MoonTracker SEO software. Built with React, TypeScript, and Tailwind CSS.",
 };

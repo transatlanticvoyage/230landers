@@ -1,11 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AdminDevPanel from '../components/AdminDevPanel'
 
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState('')
-  // Updated for git staging trigger
+  
+  useEffect(() => {
+    document.title = 'Landing Pages Collection'
+  }, [])
 
   const landingPages = [
     {
