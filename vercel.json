@@ -1,4 +1,5 @@
 {
+  "_comment": "Updated for git staging trigger",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",

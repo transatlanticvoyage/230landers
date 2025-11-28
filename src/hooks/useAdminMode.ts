@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+// Updated for git staging trigger
 
 interface AdminModeState {
   isAdminMode: boolean

@@ -1,4 +1,5 @@
 # 230landers - Vercel Deployment Guide
+<!-- Updated for git staging trigger -->
 
 ## Overview
 230landers is a Next.js application with multiple landing pages and checkout systems, optimized for Vercel deployment.

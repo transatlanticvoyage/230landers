@@ -5,6 +5,7 @@ import AdminDevPanel from '../components/AdminDevPanel'
 
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState('')
+  // Updated for git staging trigger
 
   const landingPages = [
     {

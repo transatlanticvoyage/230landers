@@ -28,6 +28,7 @@ interface OrderData {
 
 export default function RanktrackerPage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
+  // Updated for git staging trigger
   const [currentStep, setCurrentStep] = useState(1)
   const [selectedPlan, setSelectedPlan] = useState('professional')
   const [orderData, setOrderData] = useState<OrderData>({})

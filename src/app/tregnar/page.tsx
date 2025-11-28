@@ -5,6 +5,7 @@ import AdminDevPanel from '../../components/AdminDevPanel'
 
 export default function TregnarPage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
+  // Updated for git staging trigger
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)

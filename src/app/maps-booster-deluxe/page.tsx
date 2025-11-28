@@ -20,6 +20,7 @@ interface ContactInfo {
 
 export default function MapsBoosterDeluxePage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
+  // Updated for git staging trigger
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)

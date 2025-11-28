@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useAdminMode } from '../hooks/useAdminMode'
+// Updated for git staging trigger
 
 interface AdminDevPanelProps {
   pageName: string
