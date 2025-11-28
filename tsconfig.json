@@ -1,5 +1,4 @@
 {
-  "_comment": "Updated for git staging trigger",
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
