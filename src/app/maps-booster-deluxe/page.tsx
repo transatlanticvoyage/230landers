@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import AdminDevPanel from '../../components/AdminDevPanel'
 
@@ -20,7 +20,10 @@ interface ContactInfo {
 
 export default function MapsBoosterDeluxePage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
-  // Updated for git staging trigger
+  
+  useEffect(() => {
+    document.title = 'Maps Booster Deluxe'
+  }, [])
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
