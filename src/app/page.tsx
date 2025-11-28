@@ -5,6 +5,7 @@ import AdminDevPanel from '../components/AdminDevPanel'
 
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState('')
+  // Test comment for VS Code Source Control visibility
   
   useEffect(() => {
     document.title = 'Landing Pages Collection'
