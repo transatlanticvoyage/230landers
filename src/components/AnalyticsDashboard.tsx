@@ -58,6 +58,8 @@ export default function AnalyticsDashboard({ pageName = 'MoonTracker' }: Analyti
       const data = await response.json()
       if (data.success) {
         setAnalyticsData(data)
+      } else if (data.message === 'Analytics system not configured') {
+        setAnalyticsData(null)
       }
     } catch (error) {
       console.error('Failed to fetch analytics:', error)
@@ -106,7 +108,22 @@ export default function AnalyticsDashboard({ pageName = 'MoonTracker' }: Analyti
     return (
       <div className="bg-white rounded-xl shadow-sm border p-6">
         <h3 className="text-lg font-bold text-gray-900 mb-4">📊 Analytics Dashboard</h3>
-        <p className="text-gray-500">Failed to load analytics data.</p>
+        <div className="bg-blue-50 rounded-lg p-4">
+          <p className="text-blue-800">
+            <strong>ℹ️ Analytics System Setup Required</strong>
+          </p>
+          <p className="text-blue-700 mt-2">
+            To enable analytics tracking, configure the following environment variables:
+          </p>
+          <ul className="text-sm text-blue-600 mt-2 ml-4">
+            <li>• NEXT_PUBLIC_SUPABASE_URL</li>
+            <li>• SUPABASE_SERVICE_ROLE_KEY</li>
+            <li>• VIPER_JWT_SECRET</li>
+          </ul>
+          <p className="text-xs text-blue-600 mt-3">
+            See VIPER_SETUP.md for complete setup instructions.
+          </p>
+        </div>
       </div>
     )
   }

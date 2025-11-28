@@ -22,6 +22,11 @@ class ViperAnalytics {
   }
 
   private getOrCreateSessionId(): string {
+    // Check if we're on the client side
+    if (typeof window === 'undefined') {
+      return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    }
+
     // Check if we have an existing session ID in sessionStorage
     const existingSessionId = sessionStorage.getItem('viper_session_id')
     if (existingSessionId) {
@@ -36,9 +41,12 @@ class ViperAnalytics {
 
   private async sendEvent(event: AnalyticsEvent): Promise<void> {
     if (!this.isTrackingEnabled) return
+    
+    // Only track on client side
+    if (typeof window === 'undefined') return
 
     try {
-      await fetch('/api/viper/analytics', {
+      const response = await fetch('/api/viper/analytics', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,8 +57,17 @@ class ViperAnalytics {
           user_agent: navigator.userAgent
         }),
       })
+      
+      if (!response.ok) {
+        const data = await response.json()
+        if (data.message === 'Analytics system not configured') {
+          // Silently disable tracking if system not configured
+          this.isTrackingEnabled = false
+        }
+      }
     } catch (error) {
-      console.warn('Analytics tracking failed:', error)
+      // Silently fail for analytics to not affect user experience
+      this.isTrackingEnabled = false
     }
   }
 

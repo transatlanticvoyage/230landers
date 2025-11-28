@@ -3,8 +3,8 @@ import { createClient } from '@supabase/supabase-js'
 import jwt from 'jsonwebtoken'
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-key',
   {
     auth: {
       autoRefreshToken: false,
@@ -62,6 +62,14 @@ async function verifyAdminAuth(request: NextRequest) {
 
 // POST - Track analytics event
 export async function POST(request: NextRequest) {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    return NextResponse.json({
+      success: false,
+      message: 'Analytics system not configured'
+    })
+  }
+
   try {
     const eventData: AnalyticsEvent = await request.json()
 
@@ -120,6 +128,14 @@ export async function POST(request: NextRequest) {
 
 // GET - Retrieve analytics data (admin only)
 export async function GET(request: NextRequest) {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    return NextResponse.json({
+      success: false,
+      message: 'Analytics system not configured'
+    })
+  }
+
   const auth = await verifyAdminAuth(request)
   
   if (!auth) {

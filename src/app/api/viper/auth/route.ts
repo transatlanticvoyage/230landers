@@ -5,8 +5,8 @@ import jwt from 'jsonwebtoken'
 
 // Use service role to bypass RLS for admin operations
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-key',
   {
     auth: {
       autoRefreshToken: false,
@@ -23,6 +23,14 @@ interface LoginRequest {
 }
 
 export async function POST(request: NextRequest) {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    return NextResponse.json({
+      success: false,
+      message: 'System not configured'
+    })
+  }
+
   try {
     const { email, password }: LoginRequest = await request.json()
 
@@ -184,6 +192,14 @@ export async function POST(request: NextRequest) {
 
 // Logout endpoint
 export async function DELETE(request: NextRequest) {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    return NextResponse.json({
+      success: false,
+      message: 'System not configured'
+    })
+  }
+
   try {
     const sessionToken = request.cookies.get('viper_session')?.value
 
@@ -235,6 +251,14 @@ export async function DELETE(request: NextRequest) {
 
 // Verify session endpoint
 export async function GET(request: NextRequest) {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    return NextResponse.json({
+      success: false,
+      message: 'System not configured'
+    })
+  }
+
   try {
     const sessionToken = request.cookies.get('viper_session')?.value
 
