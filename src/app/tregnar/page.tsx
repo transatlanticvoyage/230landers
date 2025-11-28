@@ -1,10 +1,3 @@
-import { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Tregnar - Scale Your Website Portfolio with Complete SaaS Platform',
-  description: 'The complete SaaS platform for managing websites in bulk. Build, launch, and optimize lead generation sites, rank and rent properties, affiliate networks, e-commerce stores, and client SEO projects—all from one powerful dashboard.'
-}
-
 'use client'
 
 import { useState } from 'react'

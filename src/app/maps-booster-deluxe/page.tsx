@@ -1,10 +1,3 @@
-import { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Maps Booster Deluxe - Dominate Google Maps for Local Service Contractors',
-  description: 'Professional Google Business Profile optimization service designed specifically for local service contractors who want to rank #1 in Google Maps'
-}
-
 'use client'
 
 import { useState } from 'react'
