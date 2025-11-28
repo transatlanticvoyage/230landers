@@ -41,6 +41,16 @@ export default function HomePage() {
       category: 'SEO Software',
       color: 'from-purple-600 to-indigo-600',
       emoji: '🌙'
+    },
+    {
+      id: 'google-maps-citations',
+      title: 'Google Maps Citations',
+      subtitle: 'GBP Citation Building Service',
+      description: 'Professional citation building service for Google Business Profiles. High-quality backlinks and brand signals starting at $50 for 25 citations.',
+      href: '/google-maps-citations',
+      category: 'Local SEO Service',
+      color: 'from-blue-600 to-blue-800',
+      emoji: '🗺️'
     }
   ]
 
@@ -91,11 +101,11 @@ export default function HomePage() {
             <div className="text-gray-600">Landing Pages</div>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-sm border">
-            <div className="text-3xl font-bold text-green-600">3</div>
+            <div className="text-3xl font-bold text-green-600">4</div>
             <div className="text-gray-600">Checkout Systems</div>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-sm border">
-            <div className="text-3xl font-bold text-purple-600">6</div>
+            <div className="text-3xl font-bold text-purple-600">7</div>
             <div className="text-gray-600">API Endpoints</div>
           </div>
         </div>
@@ -205,6 +215,11 @@ export default function HomePage() {
           {
             label: 'Visit Ranktracker',
             action: () => window.location.href = '/ranktracker',
+            variant: 'primary'
+          },
+          {
+            label: 'Visit Google Maps Citations',
+            action: () => window.location.href = '/google-maps-citations',
             variant: 'primary'
           },
           {

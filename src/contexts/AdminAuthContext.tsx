@@ -32,6 +32,7 @@ interface AdminAuthContextType {
   login: (email: string, password: string) => Promise<{ success: boolean; message: string }>
   logout: () => Promise<void>
   checkAuth: () => Promise<void>
+  forceRefresh: () => Promise<void>
   
   // Configuration methods
   updateConfig: (updates: Record<string, any>) => Promise<{ success: boolean; message: string }>
@@ -52,6 +53,29 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     checkAuth()
   }, [])
+
+  // Periodically refresh auth and config state (shorter interval for development)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isAuthenticated) {
+        checkAuth() // This will also refresh config
+      }
+    }, process.env.NODE_ENV === 'development' ? 5000 : 30000) // 5s in dev, 30s in prod
+
+    return () => clearInterval(interval)
+  }, [isAuthenticated])
+
+  // Refresh auth state when window gains focus (user switches back from admin panel)
+  useEffect(() => {
+    const handleFocus = () => {
+      if (isAuthenticated) {
+        checkAuth()
+      }
+    }
+
+    window.addEventListener('focus', handleFocus)
+    return () => window.removeEventListener('focus', handleFocus)
+  }, [isAuthenticated])
 
   // Update dev mode status when config changes
   useEffect(() => {
@@ -129,6 +153,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
       setConfig(null)
       setIsDevModeEnabled(false)
     }
+  }
+
+  const forceRefresh = async () => {
+    await checkAuth()
   }
 
   const refreshConfig = async () => {
@@ -218,6 +246,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     login,
     logout,
     checkAuth,
+    forceRefresh,
     
     // Configuration methods
     updateConfig,

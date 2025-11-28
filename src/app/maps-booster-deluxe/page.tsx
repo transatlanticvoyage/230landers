@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import ViperDevPanel from '../../components/ViperDevPanel'
 import StepDevButtons from '../../components/StepDevButtons'
+import DevModeDebug from '../../components/DevModeDebug'
 import { useDevFeatures } from '../../contexts/AdminAuthContext'
 
 interface BusinessInfo {
@@ -639,6 +640,9 @@ export default function MapsBoosterDeluxePage() {
           </div>
         </div>
       )}
+
+      {/* Debug Component */}
+      <DevModeDebug />
 
       {/* Viper Dev Panel */}
       <ViperDevPanel 
