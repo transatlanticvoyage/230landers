@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import AdminDevPanel from '../../components/AdminDevPanel'
+import ViperDevPanel from '../../components/ViperDevPanel'
+import StepDevButtons from '../../components/StepDevButtons'
+import { useDevFeatures } from '../../contexts/AdminAuthContext'
 
 interface BusinessInfo {
   businessName: string
@@ -19,6 +21,7 @@ interface ContactInfo {
 }
 
 export default function MapsBoosterDeluxePage() {
+  const { showDevButtons, canAutoFill } = useDevFeatures()
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   
   const [currentStep, setCurrentStep] = useState(1)
@@ -130,6 +133,38 @@ export default function MapsBoosterDeluxePage() {
       setShowError(true)
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  // Auto-fill functions for dev mode
+  const autoFillStep1 = () => {
+    setBusinessInfo({
+      businessName: 'Test HVAC Company',
+      businessType: 'HVAC',
+      location: 'Dallas, TX',
+      website: 'https://testcompany.com',
+      description: 'Professional HVAC services for residential and commercial properties'
+    })
+  }
+
+  const autoFillStep2 = () => {
+    setContactInfo({
+      name: 'John Developer',
+      email: 'john.developer@testcompany.com',
+      phone: '+1 (555) 123-4567'
+    })
+  }
+
+  // Auto-submit functions for dev mode
+  const autoSubmitStep1 = async () => {
+    if (validateStep(1)) {
+      setCurrentStep(2)
+    }
+  }
+
+  const autoSubmitStep2 = async () => {
+    if (validateStep(2)) {
+      setCurrentStep(3)
     }
   }
 
@@ -351,6 +386,14 @@ export default function MapsBoosterDeluxePage() {
               {currentStep === 1 && (
                 <div>
                   <h3 className="text-xl font-bold mb-6">Tell Us About Your Business</h3>
+                  
+                  <StepDevButtons
+                    stepNumber={1}
+                    stepName="Business Information"
+                    pageName="Maps Booster Deluxe"
+                    onAutoFill={autoFillStep1}
+                    onAutoSubmit={autoSubmitStep1}
+                  />
                   <div className="space-y-5">
                     <div>
                       <label className="block text-sm font-medium mb-2">Business Name *</label>
@@ -413,6 +456,14 @@ export default function MapsBoosterDeluxePage() {
               {currentStep === 2 && (
                 <div>
                   <h3 className="text-xl font-bold mb-6">Contact Information</h3>
+                  
+                  <StepDevButtons
+                    stepNumber={2}
+                    stepName="Contact Information"
+                    pageName="Maps Booster Deluxe"
+                    onAutoFill={autoFillStep2}
+                    onAutoSubmit={autoSubmitStep2}
+                  />
                   <div className="space-y-5">
                     <div>
                       <label className="block text-sm font-medium mb-2">Your Name *</label>
@@ -464,6 +515,15 @@ export default function MapsBoosterDeluxePage() {
               {currentStep === 3 && !showSuccess && !showError && (
                 <div>
                   <h3 className="text-xl font-bold mb-6">Ready to Dominate Google Maps?</h3>
+                  
+                  <StepDevButtons
+                    stepNumber={3}
+                    stepName="Final Confirmation"
+                    pageName="Maps Booster Deluxe"
+                    onAutoSubmit={submitOrder}
+                    autoSubmitLabel="Submit Order"
+                    showSubmitButton={true}
+                  />
                   <div className="bg-gray-50 p-6 rounded-xl mb-6">
                     <h4 className="font-semibold mb-4">Service Summary</h4>
                     <div className="space-y-2 text-sm">
@@ -580,58 +640,68 @@ export default function MapsBoosterDeluxePage() {
         </div>
       )}
 
-      {/* Admin Dev Panel */}
-      <AdminDevPanel 
+      {/* Viper Dev Panel */}
+      <ViperDevPanel 
         pageName="Maps Booster Deluxe"
         devActions={[
           {
             label: 'Auto-Fill Business Info',
+            description: 'Fills business form with HVAC company test data',
             action: () => {
-              setBusinessInfo({
-                businessName: 'Test HVAC Company',
-                businessType: 'HVAC',
-                location: 'Dallas, TX',
-                website: 'https://testcompany.com',
-                description: 'Professional HVAC services for residential and commercial properties'
-              })
+              if (canAutoFill) {
+                setBusinessInfo({
+                  businessName: 'Test HVAC Company',
+                  businessType: 'HVAC',
+                  location: 'Dallas, TX',
+                  website: 'https://testcompany.com',
+                  description: 'Professional HVAC services for residential and commercial properties'
+                })
+                console.log('🐍 Viper: Auto-filled business info')
+              }
             },
             variant: 'success'
           },
           {
             label: 'Auto-Fill Contact Info',
+            description: 'Fills contact form with developer test data',
             action: () => {
-              setContactInfo({
-                name: 'John Developer',
-                email: 'john.developer@testcompany.com',
-                phone: '+1 (555) 123-4567'
-              })
+              if (canAutoFill) {
+                setContactInfo({
+                  name: 'John Developer',
+                  email: 'john.developer@testcompany.com',
+                  phone: '+1 (555) 123-4567'
+                })
+                console.log('🐍 Viper: Auto-filled contact info')
+              }
             },
             variant: 'success'
           },
           {
-            label: 'Open Checkout Modal',
-            action: () => {
-              handleCheckoutOpen()
-            },
-            variant: 'primary'
-          },
-          {
-            label: 'Test Submit (Step 3)',
-            action: () => {
-              setBusinessInfo({
-                businessName: 'Test Plumbing Co',
-                businessType: 'Plumbing',
-                location: 'Los Angeles, CA',
-                website: 'https://testplumbing.com',
-                description: 'Emergency plumbing services'
-              })
-              setContactInfo({
-                name: 'Jane Developer',
-                email: 'jane@testplumbing.com',
-                phone: '+1 (555) 987-6543'
-              })
-              setCurrentStep(3)
-              handleCheckoutOpen()
+            label: 'Complete Flow Test',
+            description: 'Opens checkout and jumps to final step with test data',
+            action: async () => {
+              if (canAutoFill) {
+                // Fill both forms
+                setBusinessInfo({
+                  businessName: 'Test Plumbing Co',
+                  businessType: 'Plumbing',
+                  location: 'Los Angeles, CA',
+                  website: 'https://testplumbing.com',
+                  description: 'Emergency plumbing services'
+                })
+                setContactInfo({
+                  name: 'Jane Developer',
+                  email: 'jane@testplumbing.com',
+                  phone: '+1 (555) 987-6543'
+                })
+                
+                // Open checkout and go to final step
+                handleCheckoutOpen()
+                await new Promise(resolve => setTimeout(resolve, 100))
+                setCurrentStep(3)
+                
+                console.log('🐍 Viper: Complete checkout flow test ready')
+              }
             },
             variant: 'warning'
           }

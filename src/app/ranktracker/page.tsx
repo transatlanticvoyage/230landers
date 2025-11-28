@@ -1,7 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import AdminDevPanel from '../../components/AdminDevPanel'
+import ViperDevPanel from '../../components/ViperDevPanel'
+import StepDevButtons from '../../components/StepDevButtons'
+import { useDevFeatures } from '../../contexts/AdminAuthContext'
+import analytics from '../../utils/analytics'
 
 interface OrderData {
   account?: {
@@ -27,6 +30,7 @@ interface OrderData {
 }
 
 export default function RanktrackerPage() {
+  const { showDevButtons, canAutoFill } = useDevFeatures()
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   
   const [currentStep, setCurrentStep] = useState(1)
@@ -38,6 +42,24 @@ export default function RanktrackerPage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [passwordStrength, setPasswordStrength] = useState('')
   const [promoApplied, setPromoApplied] = useState(false)
+
+  // Analytics tracking
+  useEffect(() => {
+    analytics.trackPageLoad('MoonTracker')
+  }, [])
+
+  // Track step changes
+  useEffect(() => {
+    if (isCheckoutOpen && currentStep) {
+      const stepNames = {
+        1: 'Plan Selection',
+        2: 'Account Information', 
+        3: 'Payment Information',
+        4: 'Order Confirmation'
+      }
+      analytics.trackStepStart('MoonTracker', currentStep, stepNames[currentStep as keyof typeof stepNames])
+    }
+  }, [currentStep, isCheckoutOpen])
 
   const planPrices = {
     starter: 29,
@@ -58,9 +80,17 @@ export default function RanktrackerPage() {
     }
     setIsCheckoutOpen(true)
     document.body.style.overflow = 'hidden'
+    
+    // Track checkout opening
+    analytics.trackCheckoutOpen('MoonTracker')
   }
 
   const closeCheckout = () => {
+    // Track checkout abandonment (only if not completed)
+    if (!showSuccess) {
+      analytics.trackCheckoutAbandon('MoonTracker', currentStep)
+    }
+    
     setIsCheckoutOpen(false)
     document.body.style.overflow = 'auto'
     setCurrentStep(1)
@@ -75,7 +105,15 @@ export default function RanktrackerPage() {
   }
 
   const validateStep = (step: number): boolean => {
-    if (step === 1) return true
+    if (step === 1) {
+      // Track step 1 completion
+      analytics.trackStepComplete('MoonTracker', 1, 'Plan Selection', {
+        selected_plan: selectedPlan,
+        promo_applied: promoApplied,
+        price: getDiscountedPrice()
+      })
+      return true
+    }
     
     if (step === 2) {
       const form = document.getElementById('step2Form') as HTMLFormElement
@@ -111,17 +149,29 @@ export default function RanktrackerPage() {
       }
 
       if (isValid) {
+        const accountData = {
+          firstName: (document.getElementById('firstName') as HTMLInputElement).value,
+          lastName: (document.getElementById('lastName') as HTMLInputElement).value,
+          email: email.value,
+          company: (document.getElementById('company') as HTMLInputElement).value,
+          phone: (document.getElementById('phone') as HTMLInputElement).value,
+          website: (document.getElementById('website') as HTMLInputElement).value
+        }
+        
         setOrderData(prev => ({
           ...prev,
-          account: {
-            firstName: (document.getElementById('firstName') as HTMLInputElement).value,
-            lastName: (document.getElementById('lastName') as HTMLInputElement).value,
-            email: email.value,
-            company: (document.getElementById('company') as HTMLInputElement).value,
-            phone: (document.getElementById('phone') as HTMLInputElement).value,
-            website: (document.getElementById('website') as HTMLInputElement).value
-          }
+          account: accountData
         }))
+
+        // Track step 2 completion with sanitized data
+        analytics.trackStepComplete('MoonTracker', 2, 'Account Information', {
+          firstName: accountData.firstName,
+          lastName: accountData.lastName,
+          email: accountData.email,
+          company: accountData.company,
+          phone: accountData.phone,
+          website: accountData.website
+        })
       }
 
       return isValid
@@ -165,18 +215,29 @@ export default function RanktrackerPage() {
       }
 
       if (isValid) {
+        const paymentData = {
+          cardLast4: cardNumber.slice(-4),
+          cardName: (document.getElementById('cardName') as HTMLInputElement).value,
+          billingAddress: (document.getElementById('billingAddress') as HTMLInputElement).value,
+          billingCity: (document.getElementById('billingCity') as HTMLInputElement).value,
+          billingState: (document.getElementById('billingState') as HTMLInputElement).value,
+          billingZip: (document.getElementById('billingZip') as HTMLInputElement).value,
+          billingCountry: (document.getElementById('billingCountry') as HTMLInputElement).value
+        }
+        
         setOrderData(prev => ({
           ...prev,
-          payment: {
-            cardLast4: cardNumber.slice(-4),
-            cardName: (document.getElementById('cardName') as HTMLInputElement).value,
-            billingAddress: (document.getElementById('billingAddress') as HTMLInputElement).value,
-            billingCity: (document.getElementById('billingCity') as HTMLInputElement).value,
-            billingState: (document.getElementById('billingState') as HTMLInputElement).value,
-            billingZip: (document.getElementById('billingZip') as HTMLInputElement).value,
-            billingCountry: (document.getElementById('billingCountry') as HTMLInputElement).value
-          }
+          payment: paymentData
         }))
+
+        // Track step 3 completion with sanitized payment data
+        analytics.trackStepComplete('MoonTracker', 3, 'Payment Information', {
+          cardLast4: paymentData.cardLast4,
+          cardName: paymentData.cardName,
+          billingCity: paymentData.billingCity,
+          billingState: paymentData.billingState,
+          billingCountry: paymentData.billingCountry
+        })
       }
 
       return isValid
@@ -204,9 +265,12 @@ export default function RanktrackerPage() {
     const finalOrderData = {
       ...orderData,
       plan: selectedPlan,
-      amount: planPrices[selectedPlan as keyof typeof planPrices],
+      amount: getDiscountedPrice(),
       timestamp: new Date().toISOString()
     }
+
+    // Track payment attempt
+    analytics.trackPaymentAttempt('MoonTracker', selectedPlan, getDiscountedPrice())
 
     try {
       const response = await fetch('/api/process-payment', {
@@ -222,16 +286,101 @@ export default function RanktrackerPage() {
       if (data.success) {
         setShowSuccess(true)
         console.log('Payment successful:', data.order)
+        
+        // Track successful payment completion
+        analytics.trackPaymentComplete('MoonTracker', data.order?.id || 'unknown', selectedPlan, getDiscountedPrice())
       } else {
         setErrorMessage(data.message || 'Payment processing failed. Please try again.')
         setShowError(true)
+        
+        // Track payment failure
+        analytics.trackError('MoonTracker', 4, data.message || 'Payment processing failed')
       }
     } catch (error) {
       console.error('Payment error:', error)
       setErrorMessage('Network error. Please check your connection and try again.')
       setShowError(true)
+      
+      // Track network error
+      analytics.trackError('MoonTracker', 4, 'Network error during payment processing')
     } finally {
       setIsProcessing(false)
+    }
+  }
+
+  // Auto-fill functions for dev mode
+  const autoFillStep1 = () => {
+    setSelectedPlan('professional')
+    // Apply promo code
+    const promoInput = document.getElementById('promoCode') as HTMLInputElement
+    if (promoInput) {
+      promoInput.value = 'SAVE20'
+      applyPromoCode()
+    }
+  }
+
+  const autoFillStep2 = () => {
+    const fields = {
+      firstName: 'Jane',
+      lastName: 'Developer',
+      email: 'jane.dev@testcompany.com',
+      company: 'Test Marketing Inc',
+      phone: '+1 (555) 987-6543',
+      website: 'https://testmarketing.com',
+      password: 'testpass123',
+      confirmPassword: 'testpass123'
+    }
+
+    Object.entries(fields).forEach(([id, value]) => {
+      const element = document.getElementById(id) as HTMLInputElement
+      if (element) {
+        element.value = value
+        element.dispatchEvent(new Event('input', { bubbles: true }))
+      }
+    })
+  }
+
+  const autoFillStep3 = () => {
+    const fields = {
+      cardNumber: '4242 4242 4242 4242',
+      expiryDate: '12/25',
+      cvv: '123',
+      cardholderName: 'Jane Developer',
+      billingAddress: '123 Test Street',
+      billingCity: 'Los Angeles',
+      billingState: 'CA',
+      billingZip: '90210'
+    }
+
+    Object.entries(fields).forEach(([id, value]) => {
+      const element = document.getElementById(id) as HTMLInputElement
+      if (element) {
+        element.value = value
+        element.dispatchEvent(new Event('input', { bubbles: true }))
+      }
+    })
+
+    // Check terms agreement
+    const agreeTerms = document.getElementById('agreeTerms') as HTMLInputElement
+    if (agreeTerms) {
+      agreeTerms.checked = true
+    }
+  }
+
+  // Auto-submit functions for dev mode
+  const autoSubmitStep1 = async () => {
+    setCurrentStep(2)
+  }
+
+  const autoSubmitStep2 = async () => {
+    if (validateStep(2)) {
+      setCurrentStep(3)
+    }
+  }
+
+  const autoSubmitStep3 = async () => {
+    if (validateStep(3)) {
+      setCurrentStep(4)
     }
   }
 
@@ -505,6 +654,14 @@ export default function RanktrackerPage() {
               {currentStep === 1 && (
                 <div>
                   <h3 className="text-xl font-bold mb-6">Select Your Plan</h3>
+                  
+                  <StepDevButtons
+                    stepNumber={1}
+                    stepName="Plan Selection"
+                    pageName="MoonTracker"
+                    onAutoFill={autoFillStep1}
+                    onAutoSubmit={autoSubmitStep1}
+                  />
                   <div className="grid md:grid-cols-3 gap-5 mb-8">
                     {[
                       { plan: 'starter', name: 'Starter', price: 29, features: ['250 Keywords', '5 Websites', 'Daily Updates'] },
@@ -559,6 +716,14 @@ export default function RanktrackerPage() {
               {currentStep === 2 && (
                 <form id="step2Form">
                   <h3 className="text-xl font-bold mb-6">Create Your Account</h3>
+                  
+                  <StepDevButtons
+                    stepNumber={2}
+                    stepName="Account Information"
+                    pageName="MoonTracker"
+                    onAutoFill={autoFillStep2}
+                    onAutoSubmit={autoSubmitStep2}
+                  />
                   <div className="grid md:grid-cols-2 gap-5 mb-5">
                     <div>
                       <label className="block text-sm font-medium mb-2">First Name *</label>
@@ -648,6 +813,14 @@ export default function RanktrackerPage() {
               {currentStep === 3 && (
                 <form id="step3Form">
                   <h3 className="text-xl font-bold mb-6">Payment Information</h3>
+                  
+                  <StepDevButtons
+                    stepNumber={3}
+                    stepName="Payment Information"
+                    pageName="MoonTracker"
+                    onAutoFill={autoFillStep3}
+                    onAutoSubmit={autoSubmitStep3}
+                  />
                   <div className="flex items-center gap-3 text-green-600 mb-6">
                     <span>🔒</span>
                     <span className="text-sm">Your payment information is encrypted and secure</span>
@@ -779,6 +952,15 @@ export default function RanktrackerPage() {
               {currentStep === 4 && (
                 <div>
                   <h3 className="text-xl font-bold mb-6">Order Summary</h3>
+                  
+                  <StepDevButtons
+                    stepNumber={4}
+                    stepName="Order Confirmation"
+                    pageName="MoonTracker"
+                    onAutoSubmit={processPayment}
+                    autoSubmitLabel="Complete Order"
+                    showSubmitButton={true}
+                  />
                   <div className="bg-gray-50 p-6 rounded-xl mb-6">
                     <div className="flex justify-between py-3 border-b border-gray-200">
                       <span>Plan:</span>
@@ -879,9 +1061,9 @@ export default function RanktrackerPage() {
         </div>
       )}
 
-      {/* Admin Dev Panel */}
-      <AdminDevPanel 
-        pageName="MoonTracker (Ranktracker)"
+      {/* Viper Dev Panel */}
+      <ViperDevPanel 
+        pageName="MoonTracker"
         devActions={[
           {
             label: 'Auto-Fill Account Info',
