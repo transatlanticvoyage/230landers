@@ -21,9 +21,6 @@ interface ContactInfo {
 export default function MapsBoosterDeluxePage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   
-  useEffect(() => {
-    document.title = 'Maps Booster Deluxe'
-  }, [])
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
