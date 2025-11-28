@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     
     if (email === adminEmail && password === devPassword) {
       // Set admin session cookie (expires in 24 hours)
-      const cookieStore = cookies()
+      const cookieStore = await cookies()
       cookieStore.set('admin_authenticated', 'true', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const isAuthenticated = cookieStore.get('admin_authenticated')?.value === 'true'
     
     return NextResponse.json({
@@ -66,7 +66,7 @@ export async function GET(request: Request) {
 export async function DELETE(request: Request) {
   try {
     // Logout - clear admin session
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     cookieStore.delete('admin_authenticated')
     
     return NextResponse.json({
